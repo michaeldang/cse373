@@ -1,0 +1,11 @@
+package app;
+
+import java.util.ArrayList;
+
+public class ImageStack {
+	ArrayList imageStack;
+	
+	public ImageStack() {
+		imageStack = new ArrayList();
+	}
+}
