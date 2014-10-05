@@ -137,9 +137,6 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
    	     * using the JMenuItem method setEnabled(boolean).  Your code should go here :
    	     */
    	 	
-   	 	this.undoItem.setEnabled(false);
-   	 	this.redoItem.setEnabled(false);
-   	 	
    	 	// end of your code for initializing menu items' state.
     }
     
@@ -379,12 +376,9 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
          */
         // Add code to create the new menu items here.
         
-        undoItem = new JMenuItem("5: Undo");
-        redoItem = new JMenuItem("6: Redo");
-        
         // Next, replace this call to the 0-argument constructor by a call to the new 2-argument constructor,
         // using as arguments the two new menu items.
-        si = new ImageEnhancerWithUndoAndRedoV2(undoItem, redoItem); 
+        si = new ImageEnhancerWithUndoAndRedoV2(); 
         
         f.add("Center", si);
         formats = new JComboBox(si.getFormats());
@@ -414,16 +408,19 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
         menuItem = new JMenuItem("4: RGB Thresholds at 128");
         menuItem.addActionListener(si);
         popup.add(menuItem);
+        undoItem = new JMenuItem("5: Undo");
+        undoItem.addActionListener(si);
+        popup.add(menuItem);
+        redoItem = new JMenuItem("6: Redo");
+        redoItem.addActionListener(si);
+        popup.add(menuItem);
         
         /**
          * ==================================================================> STUDENT SHOULD DO THIS
          */
         // Add each of the two new menu items to the popup menu.
         // Also, add the action listener to each item, just as for the other items above.
-        undoItem.addActionListener(si);
-        popup.add(undoItem);
-        redoItem.addActionListener(si);
-        popup.add(redoItem);
+        
         // end of your code for this.
     }
     
