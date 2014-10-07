@@ -217,7 +217,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
     
     int lastOp;
     public void filterImage() {
-        BufferedImage filtered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);;
+        BufferedImage filtered = biFiltered;
         BufferedImageOp op = null;
         lastOp = opIndex;
         switch (opIndex) {
@@ -265,16 +265,32 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
             break;
             
         case 5 : /* undo image changes. */
-        	redoStack.push(filtered);
         	try {
-        		biFiltered = undoStack.peek();
+        		if (undoStack.getSize() == 1) {
+        			undoStack.pop();
+        			biFiltered = biOriginal;
+        		} else {
+        			biFiltered = undoStack.pop();
+        		}
+        		redoStack.push(filtered);
+        		redoItem.setEnabled(true);
+        		if(undoStack.isEmpty()) {
+            		undoItem.setEnabled(false);
+            	}
         	} catch (Exception e) {
-        		
         	}
         	break;
         
         case 6 : /* redo image changes. */
-        	redoStack.pop();
+        	try {
+        		biFiltered = redoStack.pop();
+        		undoStack.push(filtered);
+        		undoItem.setEnabled(true);
+        		if(redoStack.isEmpty()) {
+        			redoItem.setEnabled(false);
+        		}
+        	} catch (Exception e) {
+        	}
             break;
             
         default:return;
@@ -295,7 +311,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
         		redoItem.setEnabled(false);
         	    /* End of student's code to handle manipulation of Undo and Redo stacks when an image operation is performed. */
         	
-        		biFiltered = filtered;
+        		biFiltered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         		op.filter(biWorking, biFiltered);
         }
         gWorking.drawImage(biFiltered, 0, 0, null);
