@@ -217,7 +217,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
     
     int lastOp;
     public void filterImage() {
-        BufferedImage filtered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);;
+        BufferedImage filtered = null;
         BufferedImageOp op = null;
         lastOp = opIndex;
         switch (opIndex) {
@@ -263,19 +263,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
             }
             op = op4;
             break;
-            
-        case 5 : /* undo image changes. */
-        	redoStack.push(filtered);
-        	try {
-        		biFiltered = undoStack.peek();
-        	} catch (Exception e) {
-        		
-        	}
-        	break;
-        
-        case 6 : /* redo image changes. */
-        	redoStack.pop();
-            break;
+
             
         default:return;
         }
@@ -289,6 +277,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
     			 * ==================================================================> STUDENT SHOULD DO THIS
     			 *   Write code to save the current state for undoing and dispose of any redoable actions.
     			 */
+        		filtered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         		undoStack.push(filtered);
         		redoStack.clear();
         		undoItem.setEnabled(true);
