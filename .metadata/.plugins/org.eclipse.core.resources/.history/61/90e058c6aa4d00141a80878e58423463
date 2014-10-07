@@ -280,8 +280,6 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
         		filtered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         		undoStack.push(filtered);
         		redoStack.clear();
-        		undoItem.setEnabled(true);
-        		redoItem.setEnabled(false);
         	    /* End of student's code to handle manipulation of Undo and Redo stacks when an image operation is performed. */
         	
         		biFiltered = filtered;

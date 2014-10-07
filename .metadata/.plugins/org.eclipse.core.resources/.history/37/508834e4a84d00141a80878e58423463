@@ -164,8 +164,7 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
         
         // Add code to create empty stack instances for the Undo stack and the Redo stack.
         // Put your code for this here:
-        undoStack = new ImageStack();
-        redoStack = new ImageStack();
+        
         
         // We add a listener to this component so that it can bring up popup menus.
         MouseListener popupListener = new PopupListener();
@@ -277,14 +276,10 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
     			 * ==================================================================> STUDENT SHOULD DO THIS
     			 *   Write code to save the current state for undoing and dispose of any redoable actions.
     			 */
-        		filtered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        		undoStack.push(filtered);
-        		redoStack.clear();
-        		undoItem.setEnabled(true);
-        		redoItem.setEnabled(false);
+        	
         	    /* End of student's code to handle manipulation of Undo and Redo stacks when an image operation is performed. */
         	
-        		biFiltered = filtered;
+        		biFiltered = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         		op.filter(biWorking, biFiltered);
         }
         gWorking.drawImage(biFiltered, 0, 0, null);
@@ -434,8 +429,8 @@ public class ImageEnhancerWithUndoAndRedoV2 extends Component implements ActionL
     
     private void printNumberOfElementsInBothStack() {
     	// Uncomment this code that prints out the numbers of elements in each of the two stacks (Undo and Redo):
-        System.out.println("Undo stack has " + undoStack.getSize() + " elements.");
-        System.out.println("Redo stack has " + redoStack.getSize() + " elements.");
+        //System.out.println("Undo stack has " + undoStack.getSize() + " elements.");
+        //System.out.println("Redo stack has " + redoStack.getSize() + " elements.");
     }
 }
 
