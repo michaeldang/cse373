@@ -1,0 +1,60 @@
+package app;
+
+import java.io.*;
+import java.util.EmptyStackException;
+import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+
+/**
+ * File name: ImageStack.java
+ * Author: Michael Dang
+ * The ImageStack is responsible for saving images for later use.
+ * ImageStack objects are used for undoing and redoing image enhancements.
+ */
+
+public class ImageStack {
+	private ArrayList<BufferedImage> imageStack;
+	private boolean wasPoppedLast = false;
+	
+	public ImageStack() {
+		imageStack = new ArrayList<BufferedImage>();
+	}
+	
+	public void push(BufferedImage givenImage) {
+		imageStack.add(givenImage);
+		wasPoppedLast = false;
+	}
+	
+	public BufferedImage pop() throws EmptyStackException {
+		if (!isEmpty()) {
+			BufferedImage returnImage = imageStack.remove(imageStack.size() - 1);
+			wasPoppedLast = true;
+			return returnImage;
+		}
+		throw new EmptyStackException();
+	}
+	
+	public BufferedImage peek() throws EmptyStackException {
+		if (!isEmpty()) {
+			return imageStack.get(imageStack.size() - 1);
+		}
+		throw new EmptyStackException();
+	}
+	
+	public boolean isEmpty() {
+		return imageStack.isEmpty();
+	}
+	
+	public void clear() {
+		imageStack.clear();
+		wasPoppedLast = false;
+	}
+	
+	public boolean popWasLast() {
+		return wasPoppedLast;
+	}
+	
+	public int getSize() {
+		return imageStack.size();
+	}
+}

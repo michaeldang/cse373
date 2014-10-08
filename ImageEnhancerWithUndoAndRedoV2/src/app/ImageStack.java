@@ -1,53 +1,91 @@
 package app;
 
 import java.io.*;
+import java.util.EmptyStackException;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
+
+/**
+ * File name: ImageStack.java
+ * Author: Michael Dang
+ * The ImageStack is responsible for saving images for later use.
+ * ImageStack objects are used for undoing and redoing image enhancements.
+ */
 
 public class ImageStack {
 	private ArrayList<BufferedImage> imageStack;
 	private boolean wasPoppedLast = false;
 	
+	/**
+	 * Creates an empty ImageStack
+	 */
 	public ImageStack() {
 		imageStack = new ArrayList<BufferedImage>();
 	}
 	
+	/**
+	 * Stores the given image.
+	 * @param givenImage The BufferedImage to be stored
+	 */
 	public void push(BufferedImage givenImage) {
 		imageStack.add(givenImage);
 		wasPoppedLast = false;
 	}
 	
-	public BufferedImage pop() throws Exception {
-		try {
+	/** 
+	 * Removes the last image added
+	 * @return Returns the last BufferedImage added
+	 * @throws EmptyStackException Throws exception if the stack is empty
+	 */
+	public BufferedImage pop() throws EmptyStackException {
+		if (!isEmpty()) {
 			BufferedImage returnImage = imageStack.remove(imageStack.size() - 1);
 			wasPoppedLast = true;
 			return returnImage;
-		} catch (Exception stackEmptyError) {
-			return null;
 		}
+		throw new EmptyStackException();
 	}
 	
-	public BufferedImage peek() throws Exception {
-		try {
+	/**
+	 * Returns the last image added
+	 * @return The last BufferedImage added
+	 * @throws EmptyStackException Throws exception if there are no images stored
+	 */
+	public BufferedImage peek() throws EmptyStackException {
+		if (!isEmpty()) {
 			return imageStack.get(imageStack.size() - 1);
-		} catch (Exception e) {
-			return null;
 		}
+		throw new EmptyStackException();
 	}
 	
+	/**
+	 * Returns whether there are no images stored or not
+	 * @return True if empty, false if not.
+	 */
 	public boolean isEmpty() {
 		return imageStack.isEmpty();
 	}
 	
+	/**
+	 * Removes all images stored
+	 */
 	public void clear() {
 		imageStack.clear();
 		wasPoppedLast = false;
 	}
 	
+	/**
+	 * Returns whether pop was the last action performed or not
+	 * @return True if pop was the last action performed, false if not
+	 */
 	public boolean popWasLast() {
 		return wasPoppedLast;
 	}
 	
+	/**
+	 * Returns the number of images stored
+	 * @return The number of images stored
+	 */
 	public int getSize() {
 		return imageStack.size();
 	}
